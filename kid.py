@@ -47,7 +47,12 @@ def th_kid2dry(th, rv):
   return th * (1 + rv * R_v / R_d)**(R_d/c_pd)
 
 def th_dry2kid(th_d, rv):
-  return th_d * (1 + rv * R_v / R_d)**(-R_d/c_pd)
+  np.seterr(all='raise')
+  try:
+    ret = th_d * (1 + rv * R_v / R_d)**(-R_d/c_pd)
+  except:
+    pdb.set_trace()
+  return ret
 
 def rho_kid2dry(rho, rv):
   # KiD seems to define rho as (p_v + p_d) / (R_d T)
@@ -60,6 +65,7 @@ def micro_step(it_diag, dt, size_z, size_x, th_ar, qv_ar, rhof_ar, rhoh_ar,
     # global should be used for all variables defined in "if first_timestep"  
     global prtcls, dx, dz, timestep, last_diag
 
+    print "timestep", timestep, it_diag, last_diag
     # superdroplets: initialisation (done only once)
     if timestep == 0:
 
@@ -114,12 +120,17 @@ def micro_step(it_diag, dt, size_z, size_x, th_ar, qv_ar, rhof_ar, rhoh_ar,
       dg.diagnostics(prtcls, arrays, 1, size_x, size_z, timestep == 0) # writing down state at t=0
 
     # spinup period logic
-    opts.sedi = opts.coal = timestep >= params["spinup"]
+    opts.sedi = True
+    opts.coal = False
     print opts.sedi, opts.coal
 
+    print "BEFORE: th_d.min, th_d.max, rv.min, rv.max", arrays["thetad"].min(), arrays["thetad"].max(), arrays["qv"].min(), arrays["qv"].max(), "\n"
+    
     # superdroplets: all what have to be done within a timestep
     prtcls.step_sync(opts, arrays["thetad"], arrays["qv"],  arrays["rhod"]) 
     prtcls.step_async(opts)
+
+    print "AFTER: th_d.min, th_d.max, rv.min, rv.max", arrays["thetad"].min(), arrays["thetad"].max(), arrays["qv"].min(), arrays["qv"].max(), "\n"
 
     # calculating tendency for theta (first converting back to non-dry theta
     ptr2np(tend_th_ar, size_x, size_z)[1:-1, :] = - (
