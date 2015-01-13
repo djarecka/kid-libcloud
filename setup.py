@@ -19,7 +19,7 @@ params = {
 }
 
 opts = libcl.lgrngn.opts_t()
-opts.sstp_cond = 5
+opts.sstp_cond = 10
 opts.sstp_coal = 1
 opts.cond = True
 opts.coal = True
