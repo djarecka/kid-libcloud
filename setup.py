@@ -6,7 +6,7 @@ import libcloudphxx as libcl
 params = {
   "real_t" : np.float64,
   "sd_conc" : 128.,
-  "spinup" : 1, # number of timesteps during which sedimentation and coalescence are off
+  "spinup" : 7200, # number of timesteps during which sedimentation and coalescence are off
   "kappa" : .61,
   "meanr" : .04e-6,
   "gstdv" : 1.4,
@@ -19,8 +19,8 @@ params = {
 }
 
 opts = libcl.lgrngn.opts_t()
-opts.sstp_cond = 1
-opts.sstp_coal = 1
+opts.sstp_cond = 10
+opts.sstp_coal = 10
 opts.cond = True
 opts.coal = True
 opts.adve = True

@@ -60,6 +60,7 @@ def micro_step(it_diag, dt, size_z, size_x, th_ar, qv_ar, rhof_ar, rhoh_ar,
     # global should be used for all variables defined in "if first_timestep"  
     global prtcls, dx, dz, timestep, last_diag
 
+    print "timestep", timestep, it_diag, last_diag
     # superdroplets: initialisation (done only once)
     if timestep == 0:
 
