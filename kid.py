@@ -84,21 +84,21 @@ def micro_step(it_diag, dt, size_z, size_x, th_ar, qv_ar, rhof_ar, rhoh_ar,
       opts_init.sd_conc_mean = params["sd_conc"]
       opts_init.dry_distros = { params["kappa"] : lognormal }
 
+#      try:
+#        print("Trying with CUDA backend..."),
+#	prtcls = libcl.lgrngn.factory(libcl.lgrngn.backend_t.CUDA, opts_init)
+#        print (" OK!")
+#      except:
+#        print (" KO!")
       try:
-        print("Trying with CUDA backend..."),
-	prtcls = libcl.lgrngn.factory(libcl.lgrngn.backend_t.CUDA, opts_init)
+        print("Trying with OpenMP backend..."),
+        prtcls = libcl.lgrngn.factory(libcl.lgrngn.backend_t.OpenMP, opts_init)
         print (" OK!")
       except:
         print (" KO!")
-        try:
-          print("Trying with OpenMP backend..."),
-	  prtcls = libcl.lgrngn.factory(libcl.lgrngn.backend_t.OpenMP, opts_init)
-          print (" OK!")
-        except:
-          print (" KO!")
-          print("Trying with serial backend..."),
-	  prtcls = libcl.lgrngn.factory(libcl.lgrngn.backend_t.serial, opts_init)
-          print (" OK!")
+        print("Trying with serial backend..."),
+        prtcls = libcl.lgrngn.factory(libcl.lgrngn.backend_t.serial, opts_init)
+        print (" OK!")
     
       # allocating arrays for those variables that are not ready to use
       # (i.e. either different size or value conversion needed)
