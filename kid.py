@@ -17,8 +17,6 @@ ffi = cffi.FFI()
 flib = ffi.dlopen('KiD_SC_2D.so')
 clib = ffi.dlopen('ptrutil.so')
 
-print "GIT", libcl.git_revision
-
 # C functions
 ffi.cdef("void save_ptr(char*,void*);")
 
