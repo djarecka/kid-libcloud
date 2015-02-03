@@ -6,7 +6,7 @@ import libcloudphxx as libcl
 params = {
   "real_t" : np.float64,
   "sd_conc" : 8.,
-  "spinup" : 7200, # number of timesteps during which sedimentation and coalescence are off
+  "spinup" : 7200*20, # number of timesteps during which sedimentation and coalescence are off
   "kappa" : .61,
   "meanr" : .04e-6,
   "gstdv" : 1.4,
@@ -16,8 +16,8 @@ params = {
   # bins considered as cloud water (all below is aerosol, all above is rain) 
   "bins_qc_r20um" : np.arange(1, 12), # r=20 um threshold setting (actually D=39.7 um)
   "bins_qc_r32um" : np.arange(1, 14), # r=32 um threshold setting (actually D=63.0 um)
-  "sstp_cond" : 20,
-  "sstp_coal" : 20
+  "sstp_cond" : 1,
+  "sstp_coal" : 1
 }
 
 opts = libcl.lgrngn.opts_t()
