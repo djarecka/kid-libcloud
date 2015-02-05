@@ -20,7 +20,7 @@ icase=602
 
 &control
 mphys_scheme='libcloud_lgr'
-dt=1.
+dt=.1
 dgstart=-1.0
 dg_dt=300.0
 tctrl(1)=18000.
