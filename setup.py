@@ -27,3 +27,4 @@ opts.adve = True
 opts.sedi = True
 opts.chem = False
 opts.kernel = libcl.lgrngn.kernel_t.geometric
+opts.RH_max = 1.05
