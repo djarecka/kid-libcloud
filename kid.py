@@ -74,6 +74,8 @@ def micro_step(it_diag, dt, size_z, size_x, th_ar, qv_ar, rhof_ar, rhoh_ar,
     # global should be used for all variables defined in "if first_timestep"  
     global prtcls, dx, dz, timestep, last_diag
 
+    print "timestep, it_diag, last_diag", timestep, it_diag, last_diag
+
     # superdroplets: initialisation (done only once)
     if timestep == 0:
 
@@ -125,6 +127,8 @@ def micro_step(it_diag, dt, size_z, size_x, th_ar, qv_ar, rhof_ar, rhoh_ar,
     # defining qv and thetad (in every timestep) 
     arrays["qv"][:,:] = ptr2np(qv_ar, size_x, size_z)[1:-1, :]
     arrays["thetad"][:,:] = th_kid2dry(ptr2np(th_ar, size_x, size_z)[1:-1, :], arrays["qv"][:,:])
+    print "max, min qv", arrays["qv"].max(), arrays["qv"].min(),  arrays["qv"].sum()
+    print "max, min thetad", arrays["thetad"].max(), arrays["thetad"].min(), arrays["thetad"].sum() 
 
 
     # finalising initialisation
@@ -154,17 +158,17 @@ def micro_step(it_diag, dt, size_z, size_x, th_ar, qv_ar, rhof_ar, rhoh_ar,
 
 
     # calculating tendency for theta (first converting back to non-dry theta
-    ptr2np(tend_th_ar, size_x, size_z)[1:-1, :] = - (
-      ptr2np(th_ar, size_x, size_z)[1:-1, :] -   # old
-      th_dry2kid(arrays["thetad"], arrays["qv"]) # new
-    ) / dt #TODO: check if dt needed
+    ptr2np(tend_th_ar, size_x, size_z)[1:-1, :] =  0 #- (
+#      ptr2np(th_ar, size_x, size_z)[1:-1, :] -   # old
+#      th_dry2kid(arrays["thetad"], arrays["qv"]) # new
+#    ) / dt #TODO: check if dt needed
 
 
     # calculating tendency for qv
-    ptr2np(tend_qv_ar, size_x, size_z)[1:-1, :] = - (
-      ptr2np(qv_ar, size_x, size_z)[1:-1, :] - # old                
-      arrays["qv"]                             # new 
-    ) / dt #TODO: check if dt needed    
+    ptr2np(tend_qv_ar, size_x, size_z)[1:-1, :] = 0 #- (
+#      ptr2np(qv_ar, size_x, size_z)[1:-1, :] - # old                
+#      arrays["qv"]                             # new 
+#    ) / dt #TODO: check if dt needed    
 
 
     # diagnostics
