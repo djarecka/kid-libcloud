@@ -62,6 +62,7 @@ contains
       call c_f_procpointer(cptr, fptr)
     end if
 
+    print*, "qv(10,20) w fortranie", qv(10,20) 
     ! do the below every timestep
     if (.not. fptr(i_dgtime, dt, nz, nx+2 , &
                    theta, qv, rho, rho_half, & 
