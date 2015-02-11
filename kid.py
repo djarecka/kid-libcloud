@@ -74,6 +74,8 @@ def micro_step(it_diag, dt, size_z, size_x, th_ar, qv_ar, rhof_ar, rhoh_ar,
     # global should be used for all variables defined in "if first_timestep"  
     global prtcls, dx, dz, timestep, last_diag
 
+    print "timestep, last_diag", timestep, last_diag
+
     # superdroplets: initialisation (done only once)
     if timestep == 0:
 
@@ -141,6 +143,8 @@ def micro_step(it_diag, dt, size_z, size_x, th_ar, qv_ar, rhof_ar, rhoh_ar,
 
       prtcls.init(arrays["thetad"], arrays["qv"], arrays["rhod"], arrays["rhod_Cx"], arrays["rhod_Cz"]) 
       dg.diagnostics(prtcls, arrays, 1, size_x, size_z, timestep == 0) # writing down state at t=0
+
+    print np.amax(abs((arrays["rhod_Cx"][0:-1,:]-arrays["rhod_Cx"][1:,:]) + (arrays["rhod_Cz"][:,0:-1]-arrays["rhod_Cz"][:,1:])))
 
     # spinup period logic
     opts.sedi = opts.coal = timestep >= params["spinup"]
