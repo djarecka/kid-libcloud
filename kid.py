@@ -74,7 +74,7 @@ def micro_step(it_diag, dt, size_z, size_x, th_ar, qv_ar, rhof_ar, rhoh_ar,
     # global should be used for all variables defined in "if first_timestep"  
     global prtcls, dx, dz, timestep, last_diag
 
-    print "timestep, last_diag", timestep, last_diag
+    print "\n timestep, last_diag", timestep, last_diag
 
     # superdroplets: initialisation (done only once)
     if timestep == 0:
@@ -127,7 +127,8 @@ def micro_step(it_diag, dt, size_z, size_x, th_ar, qv_ar, rhof_ar, rhoh_ar,
     # defining qv and thetad (in every timestep) 
     arrays["qv"][:,:] = ptr2np(qv_ar, size_x, size_z)[1:-1, :]
     arrays["thetad"][:,:] = th_kid2dry(ptr2np(th_ar, size_x, size_z)[1:-1, :], arrays["qv"][:,:])
-    print "qv[10,20], qv[20,10] w pythonie", arrays["qv"][10,20], arrays["qv"][20,10]
+    np.set_printoptions(precision=12)
+    print "qv[8:12,18:22], qv[18:22,8:12] w pythonie \n", ptr2np(qv_ar, size_x, size_z)[8:12,18:22], "\n", ptr2np(qv_ar, size_x, size_z)[18:22,8:12]
 
 
     # finalising initialisation
