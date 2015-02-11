@@ -144,7 +144,14 @@ def micro_step(it_diag, dt, size_z, size_x, th_ar, qv_ar, rhof_ar, rhoh_ar,
       prtcls.init(arrays["thetad"], arrays["qv"], arrays["rhod"], arrays["rhod_Cx"], arrays["rhod_Cz"]) 
       dg.diagnostics(prtcls, arrays, 1, size_x, size_z, timestep == 0) # writing down state at t=0
 
-    print np.amax(abs((arrays["rhod_Cx"][0:-1,:]-arrays["rhod_Cx"][1:,:]) + (arrays["rhod_Cz"][:,0:-1]-arrays["rhod_Cz"][:,1:])))
+    div = abs((arrays["rhod_Cx"][0:-1,:]-arrays["rhod_Cx"][1:,:]) + (arrays["rhod_Cz"][:,0:-1]-arrays["rhod_Cz"][:,1:]))
+    print "max div", div.max()
+    print "mean div", div.mean()
+    print "max bez pierwszego poziomu div[:,1:]", div[:,1:].max()
+    print "mean bez pierwszego poziomu div[:,1:]", div[:,1:].mean()
+
+
+    #pdb.set_trace()
 
     # spinup period logic
     opts.sedi = opts.coal = timestep >= params["spinup"]
