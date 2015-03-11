@@ -101,6 +101,7 @@ def micro_step(it_diag, dt, size_z, size_x, th_ar, qv_ar, rhof_ar, rhoh_ar,
 
       try:
         print("Trying with CUDA backend..."),
+        raise Exception('My error! do not want CUDA now')
 	prtcls = libcl.lgrngn.factory(libcl.lgrngn.backend_t.CUDA, opts_init)
         print (" OK!")
       except:
