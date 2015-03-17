@@ -73,6 +73,7 @@ def micro_step(it_diag, dt, size_z, size_x, th_ar, qv_ar, rhof_ar, rhoh_ar,
   try:
     # global should be used for all variables defined in "if first_timestep"  
     global prtcls, dx, dz, timestep, last_diag
+    print "timestep", timestep, it_diag, last_diag
 
     # superdroplets: initialisation (done only once)
     if timestep == 0:
@@ -102,6 +103,7 @@ def micro_step(it_diag, dt, size_z, size_x, th_ar, qv_ar, rhof_ar, rhoh_ar,
       try:
         print("Trying with CUDA backend..."),
 	prtcls = libcl.lgrngn.factory(libcl.lgrngn.backend_t.CUDA, opts_init)
+        raise Exception('My error! do not want CUDA now')
         print (" OK!")
       except:
         print (" KO!")
@@ -143,6 +145,7 @@ def micro_step(it_diag, dt, size_z, size_x, th_ar, qv_ar, rhof_ar, rhoh_ar,
 
     # spinup period logic
     opts.sedi = opts.coal = timestep >= params["spinup"]
+    print "sedi, coal", opts.sedi, opts.coal 
 
     # superdroplets: all what have to be done within a timestep
 
